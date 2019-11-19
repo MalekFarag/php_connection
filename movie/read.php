@@ -12,7 +12,11 @@ $database = new Database();
 $db = $database->getConnection();
 $movie = new Movie($db);
 
-$stmt = $movie->getMovies();
+if(isset($_GET['id'])){
+    $stmt = $movie->getMovieByID($_GET['id']);
+}else{
+    $stmt = $movie->getMovies();
+}
 
 $num = $stmt->rowCount();
 

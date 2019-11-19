@@ -10,10 +10,17 @@
             $this->conn = $db;
         }
 
+        public function getMovieByID($id){
+            $query = 'SELECT * FROM tbl_movies WHERE movies_id = '.$id;
+                    
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            return $stmt;
+        }
+
         public function getMovies(){
             // get genre of the movie
-            //$query   = 'SELECT * FROM '.$this->$movie_table.' AND '.$this->$genre_table.' AND '.$this->$movie_genre_linking_table;
-            // $query   = 'SELECT * FROM tbl_mov_genre INNER JOIN tbl_movies ON movies_id = movies_id tbl_movies INNER JOIN tbl_genre ON movies_id = movies_id;';
             $query   = 'SELECT
             m.*,
             GROUP_CONCAT(g.genre_name) AS genre_name
@@ -25,15 +32,6 @@
             link.genre_id = g.genre_id
         GROUP BY
             m.movies_id';
-
-            $queryM  = 'SELECT * FROM '.$this->movie_table;
-            $queryG  = 'SELECT * FROM '.$this->genre_table;
-            $queryMG = 'SELECT * FROM '.$this->$movie_genre_linking_table;
-
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-
-            return $stmt;
         }
         
     }
